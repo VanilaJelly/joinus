@@ -39,6 +39,7 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
         <url-pattern>/</url-pattern>
     </servlet-mapping>
     
+    <!--added to use captcha -->
     <servlet>
         <servlet-name>StickyCaptcha</servlet-name>
         <servlet-class>nl.captcha.servlet.StickyCaptchaServlet</servlet-class>
