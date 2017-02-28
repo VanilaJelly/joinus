@@ -110,6 +110,11 @@
 
 		<input type="submit" value="submit and join!"/>
 	</form>
+	
+	<img src="/stickyImg" />
+    <form action="/captchaSubmit.jsp" method="post">
+        <input name="answer" />
+    </form>
 
 </body>
 </html>
