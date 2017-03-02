@@ -30,7 +30,6 @@
 		}
 
 		return 0;
-
 	}
 
 	function checkpasswd(passwd, passwdc){
@@ -97,6 +96,27 @@
 		}
 	}
 
+    $(document).ready(function () {
+        $('#fileInput').uploadify({
+            'uploader': 'uploadify.swf',
+            'script': 'uploadify.ashx',
+            'cancelImg': 'cancel.png',
+            'auto': false,
+            'folder': '/Uploads',
+            'onComplete': function (event, queueID, fileObj, response, data) {
+
+            $('#lblFile').append('<a href="/WebJQuery' + fileObj.filePath + '">' + fileObj.name + '</a></ br>');
+
+            }
+            $('#btn').click(function () { $('#fileInput').uploadifyUpload(); });
+
+    });
+
+
+            $('#btn').click(function () { $('#fileInput').uploadifyUpload(); });
+
+        });
+
 </script>
 	<H2> Join Us </H2>
 
@@ -110,11 +130,16 @@
 		phone: <input type="text" name="phone"/> *Please insert numbers only, without '-'
 		<br/>
 
-	<div>
-    <p><label>address</label><input type="text" class="postcodify_address" /><button type=button id="search_button">search</button></p>
-    <p><label>detailed address</label><input type="text" class="postcodify_details" /></p>
-    </div>
-		<input type="submit" value="submit and join!"/>
+    	<div>
+        <p><label>address</label><input type="text" class="postcodify_address" /><button type=button id="search_button">search</button></p>
+        <p><label>detailed address</label><input type="text" class="postcodify_details" /></p>
+        </div>
+
+        <input type=file name=fileinput id=fileinput />
+        <button type=button id=imgupload value=upload /> upload </button>
+        <br/>
+
+        <input type="submit" value="submit and join!"/>
 	</form>
 
 	<img src="/join/stickyImg" />
