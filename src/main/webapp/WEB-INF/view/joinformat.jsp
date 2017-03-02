@@ -101,26 +101,7 @@
 		}
 	}
 
-    $(document).ready(function () {
-        $('#fileInput').uploadify({
-            'uploader': 'uploadify.swf',
-            'script': 'uploadify.ashx',
-            'cancelImg': 'cancel.png',
-            'auto': false,
-            'folder': '/Uploads',
-            'onComplete': function (event, queueID, fileObj, response, data) {
 
-            $('#lblFile').append('<a href="/WebJQuery' + fileObj.filePath + '">' + fileObj.name + '</a></ br>');
-
-            }
-            $('#btn').click(function () { $('#fileInput').uploadifyUpload(); });
-
-    });
-
-
-            $('#btn').click(function () { $('#fileInput').uploadifyUpload(); });
-
-        });
 
 </script>
 	<H2> Join Us </H2>
@@ -153,6 +134,23 @@
     </form>
 
     <script type="text/javascript">
+        $(document).ready(function () {
+            $('#fileInput').uploadify({
+                'uploader': 'uploadify.swf',
+                'script': 'uploadify.ashx',
+                'cancelImg': 'cancel.png',
+                'auto': false,
+                'folder': '/Uploads',
+                'onComplete': function (event, queueID, fileObj, response, data) {
+
+                $('#lblFile').append('<a href="/WebJQuery' + fileObj.filePath + '">' + fileObj.name + '</a></ br>');
+
+                }
+                $('#btn').click(function () { $('#fileInput').uploadifyUpload(); });
+
+        });
+        });
+
         $("#search_button").postcodifyPopUp();
     </script>
 
