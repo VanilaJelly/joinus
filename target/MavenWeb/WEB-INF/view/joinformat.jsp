@@ -3,8 +3,11 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>join us</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>join us</title>
+    <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js" charset="UTF-8"></script>
+    <script type="text/javascript" src="//cdn.poesis.kr/post/popup.min.js" charset="UTF-8"></script>
+
 </head>
 <body>
 
@@ -106,15 +109,23 @@
 		<br/>
 		phone: <input type="text" name="phone"/> *Please insert numbers only, without '-'
 		<br/>
-		<br/>
 
+	<div>
+    <p><label>address</label><input type="text" class="postcodify_address" /><button type=button id="search_button">search</button></p>
+    <p><label>detailed address</label><input type="text" class="postcodify_details" /></p>
+    </div>
 		<input type="submit" value="submit and join!"/>
 	</form>
-	
-	<img src="/stickyImg" />
+
+	<img src="/join/stickyImg" />
     <form action="/captchaSubmit.jsp" method="post">
         <input name="answer" />
     </form>
+
+    <script type="text/javascript">
+        $("#search_button").postcodifyPopUp();
+    </script>
+
 
 </body>
 </html>
