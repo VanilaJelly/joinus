@@ -42,7 +42,7 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
     <!--added to use captcha -->
     <servlet>
         <servlet-name>StickyCaptcha</servlet-name>
-        <servlet-class>nl.captcha.servlet.StickyCaptchaServlet</servlet-class>
+        <servlet-class>nl.captcha.servlet.SimpleCaptchaServlet</servlet-class>
         <!-- The width and height params are optional; 
         if unspecified they default to 200 and 50 respectively. -->
         <init-param>

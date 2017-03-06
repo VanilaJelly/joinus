@@ -10,36 +10,43 @@ import com.join.web.model.RequestModel;
 
 @Controller
 public class joinus {
-	
-	public String email;
-	public String phone;
-	public String passwd;
-	
+    
+    public String email;
+    public String phone;
+    public String passwd;
+    
 
-	@RequestMapping("/")
-	public String join(){
-		return "joinformat";
-	}
-	
-	@RequestMapping("/welcome")
-	public String welcome(RequestModel model, Model M){
-		
-		email = model.getEmail();
-		passwd = model.getPasswd();
-		phone = model.getPhone();
-		
-		M.addAttribute("email", email);
-		M.addAttribute("phone", phone);
-		
-		return "welcome";
-	}
-	
-	 @RequestMapping(method=RequestMethod.POST)
-	 public String handleFile(MultipartHttpServletRequest request)
-	 {
-	  MultipartFile file = request.getFile("filedata");
-	  //some code here
-	  return "fileupload/success";
-	 }
+    @RequestMapping("/")
+    public String join(){
+        return "joinformat";
+    }
+    
+    @RequestMapping("/welcome")
+    public String welcome(RequestModel model, Model M){
+        
+        email = model.getEmail();
+        passwd = model.getPasswd();
+        phone = model.getPhone();
+        
+        M.addAttribute("email", email);
+        M.addAttribute("phone", phone);
+        
+        return "welcome";
+    }
+    
+    @RequestMapping("/captchaSubmit")
+    public String captchaSubmit(){
+        return "captchaSubmit";
+    }
+
+     @RequestMapping(method=RequestMethod.POST)
+     public String handleFile(MultipartHttpServletRequest request)
+     {
+      MultipartFile file = request.getFile("filedata");
+      //some code here
+      return "fileupload/success";
+     }
 
 }
+
+

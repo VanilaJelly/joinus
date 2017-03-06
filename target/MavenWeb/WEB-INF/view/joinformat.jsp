@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ page import="nl.captcha.Captcha" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -18,6 +19,18 @@
 
 <script type="text/javascript">
 
+    function imgRefresh(){
+        var d = new Date();
+        $("#captchaImg").attr("src", "/join/stickyImg?"+d.getTime());
+    }
+
+    function checkAns(){
+    var popUrl = "/join/captchaSubmit";
+    var popOption = "width = 50, height = 50, resizable = yes, scrollbars = no, status = no";
+
+    window.open(popUrl, "", popOption);
+
+    }
 	function checkemail(mailaddr){
 		if (mailaddr==""){
 			alert("put email");
@@ -70,7 +83,7 @@
 		}
 
 		return 0;
-}
+    }
 
 	function checkphone(phone){
 		var num = phone.replace(/[^0-9]/g,"");
@@ -101,8 +114,6 @@
 		}
 	}
 
-
-
 </script>
 	<H2> Join Us </H2>
 
@@ -125,32 +136,19 @@
         <button type=button id=imgupload value=upload /> upload </button>
         <br/>
 
+
+	<img src="/join/stickyImg" />
+    <p>
+    <input name="answer" />
+    <button type=button id=refresh onclick="imgRefresh()">Refresh</button>
+    <button type=button id=submitans method = "POST" action = "/join/captchaSubmit">Answer</button>
+    </p>
+
         <input type="submit" value="submit and join!"/>
 	</form>
 
-	<img src="/join/stickyImg" />
-    <form action="/captchaSubmit.jsp" method="post">
-        <input name="answer" />
-    </form>
 
     <script type="text/javascript">
-        $(document).ready(function () {
-            $('#fileInput').uploadify({
-                'uploader': 'uploadify.swf',
-                'script': 'uploadify.ashx',
-                'cancelImg': 'cancel.png',
-                'auto': false,
-                'folder': '/Uploads',
-                'onComplete': function (event, queueID, fileObj, response, data) {
-
-                $('#lblFile').append('<a href="/WebJQuery' + fileObj.filePath + '">' + fileObj.name + '</a></ br>');
-
-                }
-                $('#btn').click(function () { $('#fileInput').uploadifyUpload(); });
-
-        });
-        });
-
         $("#search_button").postcodifyPopUp();
     </script>
 
