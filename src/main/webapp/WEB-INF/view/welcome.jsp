@@ -13,6 +13,7 @@
 	<h4> please confirm your informations </h4>
 	<p> email: ${ email }</p>
 	<p> phone number: ${ phone }</p>
-
+    <p> code: ${ code } </p>
+    <p> root: ${ root_path } </p>
 </body>
 </html>

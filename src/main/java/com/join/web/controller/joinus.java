@@ -3,6 +3,7 @@ package com.join.web.controller;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.ui.Model;
@@ -74,8 +75,11 @@ public class joinus {
     }
 
     @RequestMapping("/emailverification")
-    public String emailverification(Model M, HttpServletRequest request){
+    public String emailverification(@RequestParam(required=false) String code, Model M, HttpServletRequest request){
         String root_path = request.getSession().getServletContext().getRealPath("/");
+
+        M.addAttribute("root_path", root_path);
+        M.addAttribute("code", code);
 
         File file = new File(root_path + "a.txt");
 
@@ -89,9 +93,9 @@ public class joinus {
             M.addAttribute("email", email);
             M.addAttribute("phone", phone);
         } catch(FileNotFoundException e){
-            return "simplecaptcha";
+            return "welcome";
         } catch(IOException e) {
-            return "simplecaptcha";
+            return "welcome";
         }
 
         return "welcome";
