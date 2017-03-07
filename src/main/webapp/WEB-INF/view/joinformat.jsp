@@ -147,9 +147,17 @@
         <input type="submit" value="submit and join!"/>
 	</form>
 
-
     <script type="text/javascript">
         $("#search_button").postcodifyPopUp();
+
+        $(document).ready(function(){
+            $("submitans").click(function(){
+                $.post("/join/captchaSubmit", ans = Document.getElementbyId("answer"),
+                    function(ans){
+                        alert("ans");
+                    });
+            });
+        });
     </script>
 
 

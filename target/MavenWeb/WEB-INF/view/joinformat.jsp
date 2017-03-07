@@ -141,15 +141,23 @@
     <p>
     <input name="answer" />
     <button type=button id=refresh onclick="imgRefresh()">Refresh</button>
-    <button type=button id=submitans method = "POST" action = "/join/captchaSubmit">Answer</button>
+    <button type=button id=submitans method = "POST" onclick="checkAns()">Answer</button>
     </p>
 
         <input type="submit" value="submit and join!"/>
 	</form>
 
-
     <script type="text/javascript">
         $("#search_button").postcodifyPopUp();
+
+        $(document).ready(function(){
+            $("submitans").click(function(){
+                $.post("/join/captchaSubmit", ans = Document.getElementbyId("answer"),
+                    function(ans){
+                        alert("ans");
+                    });
+            });
+        });
     </script>
 
 
