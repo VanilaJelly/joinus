@@ -12,28 +12,24 @@ import com.join.web.encrypt.Rsa;
 import java.io.*;
 
 
-import java.security.Key; 
+import java.security.PublicKey;
+import java.security.PrivateKey;
 import java.security.KeyPair;
-
-
-
-
-
 
 
 import javax.servlet.http.HttpServletRequest;
 
 @Controller
 public class joinus {
-    
+
     public String email;
     public String phone;
     public String passwd;
-    
+
     public KeyPair pair = Rsa.generateKeyPair();
-    public Key pubkey = pair.getPublic();
-    public Key privkey = pair.getPrivate();
-    public String code;
+    public PublicKey pubkey = pair.getPublic();
+    public PrivateKey privkey = pair.getPrivate();
+    public String enc;
 
     @RequestMapping("/")
     public String join(){
@@ -72,10 +68,10 @@ public class joinus {
         passwd = model.getPasswd();
         phone = model.getPhone();
         
-        code = Rsa.encrypt(email, pubkey);
-        String url = "https://211.249.63.75/join/emailverification?code="+code;
+        enc = Rsa.encrypt(email, pubkey);
+        String url = "https://211.249.63.75/join/emailverification?code="+enc;
         
-        M.addAttribute("code", code);
+        M.addAttribute("code", enc);
 
         File file = new File("C:\\a.txt");
         BufferedWriter out = null;
@@ -95,14 +91,13 @@ public class joinus {
     }
 
     @RequestMapping("/emailverification")
-    public String emailverification(@RequestParam(required=false) String num, Model M, HttpServletRequest request){
+    public String emailverification(@RequestParam(required=false) String code, Model M, HttpServletRequest request){
         String root_path = request.getSession().getServletContext().getRealPath("/");
 
         M.addAttribute("root_path", root_path);
-        
-        String ex = "uXGWkgK9eMB0O1fde/3GTnw0s9B0aA2hEHinz567MwHCZu2k5T90LRqOIG9vjDwhYFxpksEsYgzy7hZvA3L/epiaGUzT2S1l/A6jvmBDlLCV2cHRXOt71ALuQklt6Rd20ZVnWRNrJpvWBePZAABvJMd0rbCvh+IxPZjLVL2rX58=";
-        String decode = Rsa.decrypt(ex, privkey);
-       
+
+        String decode = Rsa.decrypt(code, privkey);
+
         M.addAttribute("decode", decode);
 
         File file = new File("C:\\a.txt");
