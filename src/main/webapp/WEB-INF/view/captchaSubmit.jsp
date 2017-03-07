@@ -118,7 +118,7 @@
             </div>
 
             <input type=file name=fileiput id=fileinput />
-            <button type=button id=imgupload /> upload </button>
+            <button type=button id=imgupload> upload </button>
             <input type="submit" value="submit and join!"/>
         </form>
 
