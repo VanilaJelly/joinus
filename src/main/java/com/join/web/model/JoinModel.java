@@ -1,9 +1,10 @@
 package com.join.web.model;
 
-public class RequestModel {
+public class JoinModel {
 
 	private String email;
 	private String passwd;
+	private String phone;
 	
 	public String getEmail(){
 		return email;
@@ -18,10 +19,10 @@ public class RequestModel {
 		this.passwd = passwd;
 	}
 	public String getPhone(){
-		return passwd;
+		return phone;
 	}
-	public void setPhone(String passwd){
-		this.passwd = passwd;
+	public void setPhone(String phone){
+		this.phone = phone;
 	}
 	
 }

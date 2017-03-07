@@ -6,8 +6,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.ui.Model;
-import com.join.web.model.RequestModel;
+import com.join.web.model.JoinModel;
 import java.io.*;
+
+import javax.servlet.http.HttpServletRequest;
 
 @Controller
 public class joinus {
@@ -23,7 +25,7 @@ public class joinus {
     }
     
     @RequestMapping("/welcome")
-    public String welcome(RequestModel model, Model M){
+    public String welcome(JoinModel model, Model M){
         
         email = model.getEmail();
         passwd = model.getPasswd();
@@ -49,12 +51,12 @@ public class joinus {
     }
 
     @RequestMapping("/email")
-    public String emailreg(RequestModel model){
+    public String emailreg(JoinModel model, HttpServletRequest request){
         email = model.getEmail();
         passwd = model.getPasswd();
         phone = model.getPhone();
-
-        File file = new File("/root/newfile.txt");
+        
+        File file = new File("C:\\a.txt");
         BufferedWriter out = null;
         try{
             out = new BufferedWriter(new FileWriter(file));
