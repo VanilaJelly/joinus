@@ -8,7 +8,17 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.ui.Model;
 import com.join.web.model.JoinModel;
+import com.join.web.encrypt.Rsa;
 import java.io.*;
+
+
+import java.security.PrivateKey; 
+import java.security.PublicKey; 
+import java.security.KeyPair;
+
+
+
+
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -19,6 +29,9 @@ public class joinus {
     public String phone;
     public String passwd;
     
+    public KeyPair pair = Rsa.generateKeyPair();
+    public PublicKey pubkey = pair.getPublic();
+    public PrivateKey privkey = pair.getPrivate();
 
     @RequestMapping("/")
     public String join(){
@@ -57,14 +70,18 @@ public class joinus {
         passwd = model.getPasswd();
         phone = model.getPhone();
         String root_path = request.getSession().getServletContext().getRealPath("/");
+        
+        String code = Rsa.encrypt(email, pubkey);
+        String url = "https://211.249.63.75/join/emailverification?code="+code;
 
-        File file = new File(root_path + "a.txt");
+        File file = new File("C:\\a.txt");
         BufferedWriter out = null;
         try{
             out = new BufferedWriter(new FileWriter(file));
             out.write(email); out.newLine();
             out.write(passwd); out.newLine();
             out.write(phone); out.newLine();
+            out.write(url); out.newLine();
             out.flush();
             out.close();
             return "email";
@@ -79,9 +96,13 @@ public class joinus {
         String root_path = request.getSession().getServletContext().getRealPath("/");
 
         M.addAttribute("root_path", root_path);
-        M.addAttribute("code", code);
 
-        File file = new File(root_path + "a.txt");
+        
+        String decode = Rsa.decrypt(code, privkey);
+       
+        M.addAttribute("decode", decode);
+
+        File file = new File("C:\\a.txt");
 
         BufferedReader br = null;
         try {

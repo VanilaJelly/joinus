@@ -140,6 +140,13 @@
             <artifactId>mysql-connector-java</artifactId>
             <version>5.1.31</version>
         </dependency>
+        
+        <!--crypto-->
+        <dependency>	
+  			<groupId>commons-codec</groupId>
+  			<artifactId>commons-codec</artifactId>
+  			<version>1.10</version>
+		</dependency>
 
     </dependencies>
 
