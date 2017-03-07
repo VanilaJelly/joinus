@@ -12,9 +12,10 @@ import com.join.web.encrypt.Rsa;
 import java.io.*;
 
 
-import java.security.PrivateKey; 
-import java.security.PublicKey; 
+import java.security.Key; 
 import java.security.KeyPair;
+
+
 
 
 
@@ -30,8 +31,9 @@ public class joinus {
     public String passwd;
     
     public KeyPair pair = Rsa.generateKeyPair();
-    public PublicKey pubkey = pair.getPublic();
-    public PrivateKey privkey = pair.getPrivate();
+    public Key pubkey = pair.getPublic();
+    public Key privkey = pair.getPrivate();
+    public String code;
 
     @RequestMapping("/")
     public String join(){
@@ -65,14 +67,15 @@ public class joinus {
     }
 
     @RequestMapping("/email")
-    public String emailreg(JoinModel model, HttpServletRequest request){
+    public String emailreg(JoinModel model, HttpServletRequest request, Model M){
         email = model.getEmail();
         passwd = model.getPasswd();
         phone = model.getPhone();
-        String root_path = request.getSession().getServletContext().getRealPath("/");
         
-        String code = Rsa.encrypt(email, pubkey);
+        code = Rsa.encrypt(email, pubkey);
         String url = "https://211.249.63.75/join/emailverification?code="+code;
+        
+        M.addAttribute("code", code);
 
         File file = new File("C:\\a.txt");
         BufferedWriter out = null;
@@ -92,13 +95,13 @@ public class joinus {
     }
 
     @RequestMapping("/emailverification")
-    public String emailverification(@RequestParam(required=false) String code, Model M, HttpServletRequest request){
+    public String emailverification(@RequestParam(required=false) String num, Model M, HttpServletRequest request){
         String root_path = request.getSession().getServletContext().getRealPath("/");
 
         M.addAttribute("root_path", root_path);
-
         
-        String decode = Rsa.decrypt(code, privkey);
+        String ex = "uXGWkgK9eMB0O1fde/3GTnw0s9B0aA2hEHinz567MwHCZu2k5T90LRqOIG9vjDwhYFxpksEsYgzy7hZvA3L/epiaGUzT2S1l/A6jvmBDlLCV2cHRXOt71ALuQklt6Rd20ZVnWRNrJpvWBePZAABvJMd0rbCvh+IxPZjLVL2rX58=";
+        String decode = Rsa.decrypt(ex, privkey);
        
         M.addAttribute("decode", decode);
 

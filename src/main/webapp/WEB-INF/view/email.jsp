@@ -10,7 +10,7 @@
 
     <h1> A confirmation email will be sent </h1>
 
-    <p> root: ${ root } </p>
+    <p> code: ${ code } </p>
 
 </body>
 </html>

@@ -4,6 +4,7 @@ import java.math.BigInteger;
 import java.security.InvalidKeyException; 
 import java.security.KeyFactory; 
 import java.security.KeyPair; 
+import java.security.Key;
 import java.security.KeyPairGenerator; 
 import java.security.NoSuchAlgorithmException; 
 import java.security.PrivateKey; 
@@ -22,14 +23,16 @@ import org.apache.commons.codec.binary.Base64;
 
 public class Rsa { 
 	public static final String RSA = "RSA"; 
-	public static KeyPair generateKeyPair() { KeyPair keyPair = null; 
-	try { 
-		keyPair = KeyPairGenerator.getInstance(RSA).generateKeyPair(); 
+
+	public static KeyPair generateKeyPair() { 
+		KeyPair keyPair = null; 
+		try { 
+			keyPair = KeyPairGenerator.getInstance(RSA).generateKeyPair(); 
 		} catch (NoSuchAlgorithmException e) { 
 			e.printStackTrace(); 
-			} return keyPair; } 
+		} return keyPair; } 
 
-	public static String encrypt(String text, PublicKey publicKey) { 
+	public static String encrypt(String text, Key publicKey) { 
 		byte[] bytes = text.getBytes(); 
 		String encryptedText = null; 
 		try { 
@@ -48,8 +51,8 @@ public class Rsa {
 			e.printStackTrace();
 			} return encryptedText; } 
 
-	public static String decrypt(String encryptedBase64Text, PrivateKey privateKey) { 
-		byte[] bytes = Base64.decodeBase64(encryptedBase64Text.getBytes()); 
+	public static String decrypt(String encryptedBase64Text, Key privateKey) { 
+		byte[] bytes = Base64.decodeBase64(encryptedBase64Text.getBytes());
 		String decryptedText = null;
 		try { 
 			Cipher cipher = Cipher.getInstance(RSA); 
@@ -64,7 +67,7 @@ public class Rsa {
 		} catch (IllegalBlockSizeException e) { 
 			e.printStackTrace(); 
 		} catch (BadPaddingException e) {
-			e.printStackTrace(); 
+			decryptedText = "badpadding";
 		} return decryptedText; 
 		} 
 	
