@@ -1,10 +1,10 @@
-<%@ page import="nl.captcha.Captcha" %>
 <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js" charset="UTF-8"></script>
 <script type="text/javascript" src="//cdn.poesis.kr/post/popup.min.js" charset="UTF-8"></script>
 <script type="text/javascript" src="js/jquery-1.4.2.min.js"></script>
 <script type="text/javascript" src="js/swfobject.js"></script>
 <script type="text/javascript" src="js/jquery.uploadify.v2.1.4.min.js"></script>
 
+<%@ page import="nl.captcha.Captcha" %>
 <script type="text/javascript">
 
     function checkemail(mailaddr){
@@ -118,7 +118,7 @@
             </div>
 
             <input type=file name=fileiput id=fileinput />
-            <button type=button id=imgupload /> upload </button>
+            <button type=button id=imgupload> upload </button>
             <input type="submit" value="submit and join!"/>
         </form>
 

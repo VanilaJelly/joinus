@@ -8,7 +8,9 @@
 </head>
 <body>
 
-	<h1> A confirmation email will be sent </h1>
+    <h1> A confirmation email will be sent </h1>
+
+    <p> root: ${ root } </p>
 
 </body>
 </html>

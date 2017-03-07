@@ -55,8 +55,9 @@ public class joinus {
         email = model.getEmail();
         passwd = model.getPasswd();
         phone = model.getPhone();
-        
-        File file = new File("C:\\a.txt");
+        String root_path = request.getSession().getServletContext().getRealPath("/");
+
+        File file = new File(root_path + "a.txt");
         BufferedWriter out = null;
         try{
             out = new BufferedWriter(new FileWriter(file));
@@ -73,7 +74,26 @@ public class joinus {
     }
 
     @RequestMapping("/emailverification")
-    public String emailverification(){
+    public String emailverification(Model M, HttpServletRequest request){
+        String root_path = request.getSession().getServletContext().getRealPath("/");
+
+        File file = new File(root_path + "a.txt");
+
+        BufferedReader br = null;
+        try {
+            br = new BufferedReader(new FileReader(file));
+            email = br.readLine();
+            passwd = br.readLine();
+            phone = br.readLine();
+
+            M.addAttribute("email", email);
+            M.addAttribute("phone", phone);
+        } catch(FileNotFoundException e){
+            return "simplecaptcha";
+        } catch(IOException e) {
+            return "simplecaptcha";
+        }
+
         return "welcome";
     }
 }
