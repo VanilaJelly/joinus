@@ -18,30 +18,15 @@
 
 <script type="text/javascript">
 
-    function imgRefresh(){
-        var d = new Date();
-        $("#captchaImg").attr("src", "/join/stickyImg?"+d.getTime());
-    }
-
-    function checkAns(){
-    var popUrl = "/join/captchaSubmit";
-    var popOption = "width = 50, height = 50, resizable = yes, scrollbars = no, status = no";
-
-    window.open(popUrl, "", popOption);
-
-    }
 	function checkemail(mailaddr){
 		if (mailaddr==""){
 			alert("put email");
 			return -1;
 		}
 
+        var regex=/^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/;
 
-		var index = mailaddr.indexOf('@');
-		var index2 = mailaddr.indexOf('.', index);
-		var result= 0;
-
-		if (index < 0 || index2 < 0){
+        if(regex.test(mailaddr) === false) {
 			alert("put correct email");
 			return -1;
 		}

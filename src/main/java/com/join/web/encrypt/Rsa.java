@@ -38,8 +38,20 @@ public class Rsa {
 		try { 
 			Cipher cipher = Cipher.getInstance(RSA); 
 			cipher.init(Cipher.ENCRYPT_MODE, publicKey); 
-			encryptedText = new String(Base64.encodeBase64(cipher.doFinal(bytes))); } 
-		catch (NoSuchAlgorithmException e) { 
+
+            bytes = Base64.encodeBase64(cipher.doFinal(bytes));
+
+            for (int i = 0; i < bytes.length; i++) {
+                if (bytes[i] == '+') {
+                    bytes[i] = '-';
+                } else if (bytes[i] == '/') {
+                    bytes[i] = '_';
+                }
+            }
+
+            encryptedText = new String(bytes);
+
+        }catch (NoSuchAlgorithmException e) { 
 			e.printStackTrace(); 
 			} catch (NoSuchPaddingException e) {
 				e.printStackTrace(); 
@@ -52,8 +64,18 @@ public class Rsa {
 			} return encryptedText; } 
 
 	public static String decrypt(String encryptedBase64Text, Key privateKey) { 
-		byte[] bytes = Base64.decodeBase64(encryptedBase64Text.getBytes());
-        System.out.print("Hello "); 
+		byte[] bytes = encryptedBase64Text.getBytes();
+
+        for (int i = 0; i < bytes.length; i++) {
+            if (bytes[i] == '-') {
+                bytes[i] = '+';
+            } else if (bytes[i] == '_') {
+                bytes[i] = '/';
+            }
+        }
+
+		bytes = Base64.decodeBase64(bytes);
+
 		String decryptedText = null;
 		try { 
 			Cipher cipher = Cipher.getInstance(RSA); 

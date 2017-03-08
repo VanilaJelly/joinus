@@ -13,12 +13,9 @@
             return -1;
         }
 
+        var regex=/^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/;
 
-        var index = mailaddr.indexOf('@');
-        var index2 = mailaddr.indexOf('.', index);
-        var result= 0;
-
-        if (index < 0 || index2 < 0){
+        if(regex.test(mailaddr) === false) {
             alert("put correct email");
             return -1;
         }
@@ -90,6 +87,14 @@
         }
     }
 
+    function openPopup(){
+
+        var popUrl = "fileupload";
+        var popOption = "width=370, height 100, resizable=yes";
+        window.open(popUrl, "", popOption);
+
+    }
+
 </script>
 
 
@@ -113,12 +118,14 @@
             <br/>
 
             <div>
-            <p><label>address</label><input type="text" class="postcodify_address" /><button type=button id="search_button">search</button></p>
-            <p><label>detailed address</label><input type="text" class="postcodify_details" /></p>
+            <p><label>address</label><input type="text" class="postcodify_address" name="addr" /><button type=button id="search_button">search</button></p>
+            <p><label>detailed address</label><input type="text" class="postcodify_details" name="daddr" /></p>
             </div>
 
-            <input type=file name=fileiput id=fileinput />
-            <button type=button id=imgupload> upload </button>
+            <p>
+            <button type="button" id="uploadfile" onclick="return openPopup()">file upload </button>
+            </p>
+
             <input type="submit" value="submit and join!"/>
         </form>
 
@@ -132,3 +139,5 @@
 <script type="text/javascript">
     $("#search_button").postcodifyPopUp();
 </script>
+
+

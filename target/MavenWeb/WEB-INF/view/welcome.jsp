@@ -13,6 +13,8 @@
 	<h4> please confirm your informations </h4>
 	<p> email: ${ email }</p>
 	<p> phone number: ${ phone }</p>
-    <p> decode: ${ decode } </p>
+    <p> address: ${ addr } ${ detailedaddr }</p>
+
+
 </body>
 </html>
