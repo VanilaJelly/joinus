@@ -15,7 +15,7 @@
     }
 </script>
 
-<body onLoad="closePopup('5000')">
+<body onLoad="closePopup('2000')">
 
     <h1> File uploaded </h1>
 

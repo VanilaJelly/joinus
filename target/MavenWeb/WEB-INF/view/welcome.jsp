@@ -9,12 +9,11 @@
 <body>
 
 	<h1> Welcome to Alternative Library! </h1>
-
 	<h4> please confirm your informations </h4>
 	<p> email: ${ email }</p>
 	<p> phone number: ${ phone }</p>
     <p> address: ${ addr } ${ detailedaddr }</p>
-
+    <img src="/var/lib/tomcat7/${ filename }" width="50" height="50" > 
 
 </body>
 </html>

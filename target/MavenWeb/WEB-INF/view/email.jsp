@@ -10,7 +10,7 @@
 
     <h1> A confirmation email will be sent </h1>
 
-    <p> code: ${ code } </p>
+    <p> code: ${ url } </p>
 
 </body>
 </html>

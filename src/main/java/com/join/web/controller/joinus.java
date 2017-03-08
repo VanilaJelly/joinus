@@ -50,7 +50,7 @@ public class joinus {
         passwd = HashPwd.getSaltedHash(passwd);
 
         String enc = Rsa.encrypt(email, pubkey);
-        String url = "https://211.249.63.75/join/emailverification?code="+enc;
+        String url = "http://211.249.63.75/join/emailverification?code="+enc;
 
         M.addAttribute("url", url);
         
