@@ -1,25 +1,22 @@
 package com.join.web.controller;
 
+import com.join.web.model.JoinModel;
+import com.join.web.encrypt.Rsa;
+import com.join.web.hash.HashPwd;
+
+import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.ui.Model;
 import org.springframework.web.servlet.ModelAndView;
-import com.join.web.model.JoinModel;
-import com.join.web.encrypt.Rsa;
+
 import java.io.*;
-
-
 import java.security.PublicKey;
 import java.security.PrivateKey;
 import java.security.KeyPair;
-
-
-
-import java.util.Random;
 import javax.servlet.http.HttpServletRequest;
 
 
@@ -40,25 +37,35 @@ public class joinus {
         return "captchaSubmit";
     }
 
-    @RequestMapping("/captchaSubmit")
-    public String captchaSubmit(){
-        return "captchaSubmit";
-    }
 
     @RequestMapping("/email")
-    public String emailsent(JoinModel model, Model M){
+    public String emailsent(JoinModel model, Model M) throws Exception{
         String email = model.getEmail();
         String passwd = model.getPasswd();
         String phone = model.getPhone();
         String addr = model.getAddr();
         String daddr = model.getDaddr();
+        String filename;
 
-
+        passwd = HashPwd.getSaltedHash(passwd);
 
         String enc = Rsa.encrypt(email, pubkey);
         String url = "https://211.249.63.75/join/emailverification?code="+enc;
 
-        M.addAttribute("code", enc);
+        M.addAttribute("url", url);
+        
+        File rfile = new File("nfile" + ".txt");
+
+        BufferedReader br = null;
+        try {
+            br = new BufferedReader(new FileReader(rfile));
+            filename = br.readLine();
+
+        } catch(FileNotFoundException e){
+            return "Error";
+        } catch(IOException e) {
+            return "Error";
+        }
 
         File file = new File(email+".txt");
         BufferedWriter out = null;
@@ -69,6 +76,7 @@ public class joinus {
             out.write(phone); out.newLine();
             out.write(addr); out.newLine();
             out.write(daddr); out.newLine();
+            out.write(filename); out.newLine();
             out.flush();
             out.close();
         } catch(IOException e){
@@ -91,11 +99,31 @@ public class joinus {
 
         String filename = file.getOriginalFilename();
 
-        File f = new File(filename);
+        int i = filename.indexOf(".");
+        String Exten = filename.substring(i);
+        filename =RandomStringUtils.randomAlphabetic(10);
+
+
+ 
+        File f = new File(filename + Exten);
 
         if(f.exists()){
-            filename = filename + "(1)";
+            filename = filename + "(1)" + Exten;
             f = new File(filename);
+        }
+        else{
+        	filename = filename + Exten;
+        }
+        
+        File rfile = new File("nfile"+".txt");
+        BufferedWriter out = null;
+        try{
+            out = new BufferedWriter(new FileWriter(rfile));
+            out.write(filename); out.newLine();
+            out.flush();
+            out.close();
+        } catch(IOException e){
+            return null;
         }
 
         try {
@@ -128,11 +156,13 @@ public class joinus {
             String phone = br.readLine();
             String addr = br.readLine();
             String daddr = br.readLine();
+            String filename = br.readLine();
 
             M.addAttribute("email", email);
             M.addAttribute("phone", phone);
             M.addAttribute("addr", addr);
             M.addAttribute("detailedaddr", daddr);
+            M.addAttribute("filename", filename);
 
             return "welcome";
 
