@@ -3,6 +3,7 @@ package com.join.web.controller;
 import com.join.web.model.JoinModel;
 import com.join.web.encrypt.Rsa;
 import com.join.web.hash.HashPwd;
+import com.join.web.dao.Dao;
 
 import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.stereotype.Controller;
@@ -12,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.ui.Model;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.beans.factory.annotation.Autowired;
+
 
 import java.io.*;
 import java.security.PublicKey;
@@ -37,6 +40,8 @@ public class joinus {
         return "captchaSubmit";
     }
 
+    @Autowired
+    private Dao Daotest;
 
     @RequestMapping("/email")
     public String emailsent(JoinModel model, Model M) throws Exception{
@@ -53,7 +58,7 @@ public class joinus {
         String url = "http://211.249.63.75/join/emailverification?code="+enc;
 
         M.addAttribute("url", url);
-        
+
         File rfile = new File("nfile" + ".txt");
 
         BufferedReader br = null;
@@ -65,6 +70,12 @@ public class joinus {
             return "Error";
         } catch(IOException e) {
             return "Error";
+        }
+
+        try{
+            Daotest.saveTest(model);
+        }catch(Exception e){
+            return "simplecaptcha";
         }
 
         File file = new File(email+".txt");
@@ -83,7 +94,7 @@ public class joinus {
             return "simplecaptcha";
         }
 
-            return "email";
+        return "email";
     }
 
     @RequestMapping("/fileupload")
@@ -173,5 +184,19 @@ public class joinus {
         }
 
     }
+
+
+@RequestMapping("/test")
+public String test(){
+
+    try {
+        Daotest.test();
+        return "simplecaptcha";
+    } catch (Exception e) {
+        return "simplecaptcha";
+    }
+
 }
 
+
+}

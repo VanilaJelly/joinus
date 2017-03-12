@@ -1,4 +1,4 @@
-package com.join.web.model;
+
 
 public class JoinModel {
 
@@ -7,6 +7,7 @@ public class JoinModel {
 	private String phone;
 	private String addr;
 	private String daddr;
+
 
 	public String getEmail(){
 		return email;
