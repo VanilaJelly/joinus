@@ -9,17 +9,15 @@
         <result property="passwd" column="pw" />
         <result property="phone" column="phone" />
         <result property="addr" column="addr" />
-        <result property="daddr" column="img" />
+        <result property="img" column="img" />
     </resultMap>
 
-    <insert id="saveTest" parameterType="com.join.web.model.JoinModel">
-        INSERT INTO members VALUES(#{email}, #{passwd}, #{phone}, #{addr}, #{daddr});
+    <insert id="saveTest" parameterType="com.join.web.model.DBModel">
+        INSERT INTO member VALUES(#{email}, #{passwd}, #{phone}, #{addr}, #{img});
     </insert>
 
     <select id="test" resultType="String">
         SELECT 'test'
     </select>
-
-
 </mapper>
 

@@ -1,6 +1,7 @@
 package com.join.web.controller;
 
 import com.join.web.model.JoinModel;
+import com.join.web.model.DBModel;
 import com.join.web.encrypt.Rsa;
 import com.join.web.hash.HashPwd;
 import com.join.web.dao.Dao;
@@ -44,13 +45,15 @@ public class joinus {
     private Dao Daotest;
 
     @RequestMapping("/email")
-    public String emailsent(JoinModel model, Model M) throws Exception{
+    public String emailsent(DBModel dbm, JoinModel model, Model M) throws Exception{
         String email = model.getEmail();
         String passwd = model.getPasswd();
         String phone = model.getPhone();
         String addr = model.getAddr();
         String daddr = model.getDaddr();
         String filename;
+
+        addr = addr + daddr;
 
         passwd = HashPwd.getSaltedHash(passwd);
 
@@ -72,25 +75,16 @@ public class joinus {
             return "Error";
         }
 
-        try{
-            Daotest.saveTest(model);
-        }catch(Exception e){
-            return "simplecaptcha";
-        }
 
-        File file = new File(email+".txt");
-        BufferedWriter out = null;
+        dbm.setEmail(email);
+        dbm.setPasswd(passwd);
+        dbm.setPhone(phone);
+        dbm.setAddr(addr);
+        dbm.setImg(filename);
+
         try{
-            out = new BufferedWriter(new FileWriter(file));
-            out.write(email); out.newLine();
-            out.write(passwd); out.newLine();
-            out.write(phone); out.newLine();
-            out.write(addr); out.newLine();
-            out.write(daddr); out.newLine();
-            out.write(filename); out.newLine();
-            out.flush();
-            out.close();
-        } catch(IOException e){
+            Daotest.saveTest(dbm);
+        }catch(Exception e){
             return "simplecaptcha";
         }
 
@@ -114,8 +108,6 @@ public class joinus {
         String Exten = filename.substring(i);
         filename =RandomStringUtils.randomAlphabetic(10);
 
-
- 
         File f = new File(filename + Exten);
 
         if(f.exists()){
@@ -123,9 +115,9 @@ public class joinus {
             f = new File(filename);
         }
         else{
-        	filename = filename + Exten;
+            filename = filename + Exten;
         }
-        
+
         File rfile = new File("nfile"+".txt");
         BufferedWriter out = null;
         try{
@@ -185,18 +177,6 @@ public class joinus {
 
     }
 
-
-@RequestMapping("/test")
-public String test(){
-
-    try {
-        Daotest.test();
-        return "simplecaptcha";
-    } catch (Exception e) {
-        return "simplecaptcha";
-    }
-
-}
 
 
 }

@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.join.web.dao.Dao;
-import com.join.web.model.JoinModel;
+import com.join.web.model.DBModel;
 
 @Repository
 public class DaoImpl implements Dao {
@@ -17,14 +17,10 @@ public class DaoImpl implements Dao {
     private SqlSession query;
 
     @Override
-    public void saveTest(JoinModel model) throws SQLException {
-        query.insert("query.saveTest", model);
+    public void saveTest(DBModel dbm) throws SQLException {
+        query.insert("query.saveTest", dbm);
     }
 
-    @Override
-    public void test() throws SQLException {
-        query.selectOne("query.test");
-    }
 }
 
 
